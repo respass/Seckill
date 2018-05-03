@@ -1,12 +1,13 @@
 package scu.zpf.seckill.vo;
 
 import org.hibernate.validator.constraints.Length;
+import scu.zpf.seckill.validator.IsPhone;
 
 import javax.validation.constraints.NotNull;
 
 public class LoginVo {
 
-    @NotNull
+    @IsPhone
     private String phone;
 
     @NotNull

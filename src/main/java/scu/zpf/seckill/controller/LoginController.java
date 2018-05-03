@@ -14,6 +14,8 @@ import scu.zpf.seckill.service.SeckillUserService;
 import scu.zpf.seckill.util.Md5Util;
 import scu.zpf.seckill.vo.LoginVo;
 
+import javax.validation.Valid;
+
 
 @Controller
 public class LoginController {
@@ -30,7 +32,7 @@ public class LoginController {
 
     @PostMapping("/login/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(LoginVo loginVo) {
+    public Result<Boolean> doLogin(@Valid LoginVo loginVo) {
 
         logger.info(loginVo.toString());
         seckillUserService.login(loginVo);
