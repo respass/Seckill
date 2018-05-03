@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import scu.zpf.seckill.domain.SeckillUser;
 import scu.zpf.seckill.result.CodeMessage;
+import scu.zpf.seckill.result.Result;
 import scu.zpf.seckill.service.SeckillUserService;
 import scu.zpf.seckill.util.Md5Util;
 import scu.zpf.seckill.vo.LoginVo;
@@ -29,17 +30,11 @@ public class LoginController {
 
     @PostMapping("/login/do_login")
     @ResponseBody
-    public CodeMessage doLogin(LoginVo loginVo) {
+    public Result<Boolean> doLogin(LoginVo loginVo) {
 
         logger.info(loginVo.toString());
-
-        SeckillUser user = seckillUserService.getByPhone(loginVo.getPhone());
-        String userPassword = user.getPassword();
-        String formPassword = loginVo.getPassword();
-        if (Md5Util.formPasswordToDbPassword(formPassword, user.getSalt()).equals(userPassword)) {
-            return CodeMessage.SUCCESS;
-        }
-        return CodeMessage.SERVER_ERROR;
+        seckillUserService.login(loginVo);
+        return Result.success(true);
     }
 
 
