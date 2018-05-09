@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisPoolFactory {
 
 	@Autowired
-	RedisConfig redisConfig;
+    RedisConfig redisConfig;
 	
 	@Bean
 	public JedisPool JedisPoolFactory() {

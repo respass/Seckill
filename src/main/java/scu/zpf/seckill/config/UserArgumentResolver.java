@@ -8,8 +8,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import scu.zpf.seckill.domain.SeckillUser;
-import scu.zpf.seckill.service.SeckillUserService;
+import scu.zpf.seckill.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
-    SeckillUserService userService;
+    UserService userService;
 
     public boolean supportsParameter(MethodParameter parameter) {
         Class<?> clazz = parameter.getParameterType();
-        return clazz==SeckillUser.class;
+        return clazz==UserService.class;
     }
 
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
@@ -31,8 +30,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
 
-        String paramToken = request.getParameter(SeckillUserService.COOKIE_NAME_TOKEN);
-        String cookieToken = getCookieValue(request, SeckillUserService.COOKIE_NAME_TOKEN);
+        String paramToken = request.getParameter(UserService.COOKIE_NAME_TOKEN);
+        String cookieToken = getCookieValue(request, UserService.COOKIE_NAME_TOKEN);
         if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
             return null;
         }
@@ -40,10 +39,10 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         return userService.getByToken(response, token);
     }
 
-    private String getCookieValue(HttpServletRequest request, String cookiName) {
+    private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[]  cookies = request.getCookies();
         for(Cookie cookie : cookies) {
-            if(cookie.getName().equals(cookiName)) {
+            if(cookie.getName().equals(cookieName)) {
                 return cookie.getValue();
             }
         }

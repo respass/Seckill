@@ -19,10 +19,25 @@
 	<!-- common.js -->
 	<script type="text/javascript" th:src="@{/js/common.js}"></script>
 
-</head>
-<body>
+	<style type="text/css">
+		html,body{
+			height:100%;
+			width:100%;
+		}
+		body{
+			background:url('/img/background.jpg') no-repeat;
+			background-size:100% 100%;
+			padding-top:100px;
+		}
 
-<form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
+
+	</style>
+</head>
+
+<body   >
+
+<div style="margin: 10% auto 0 auto;  width: 50%">
+<form name="loginForm" id="loginForm" method="post" style="color: whitesmoke"  >
 
 	<h2 style="text-align:center; margin-bottom: 20px">用户登录</h2>
 
@@ -56,6 +71,8 @@
 	</div>
 
 </form>
+</div>
+
 </body>
 <script>
     function login(){
@@ -74,7 +91,7 @@
         var password = md5(str);
 
         $.ajax({
-            url: "/login/do_login",
+            url: "/do_login",
             type: "POST",
             data:{
                 phone:$("#phone").val(),

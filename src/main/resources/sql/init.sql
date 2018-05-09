@@ -8,3 +8,4 @@ CREATE TABLE `seckill`.`user` (
   `last_login_date` DATETIME NULL COMMENT '上一次登入时间',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `usercol_UNIQUE` (`phone` ASC));
+
