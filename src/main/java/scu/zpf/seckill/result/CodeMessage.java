@@ -19,6 +19,9 @@ public class CodeMessage {
     public static CodeMessage PASSWORD_ERROR = new CodeMessage(991, "密码错误");
 
 
+    //seckill
+    public static CodeMessage Seckill_END = new CodeMessage(788, "秒杀已经结束");
+    public static CodeMessage Seckill_Repeat = new CodeMessage(789, "不能重复秒杀");
 
     private CodeMessage(int code, String message) {
         this.code = code;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scu.zpf.seckill.dao.GoodsDao;
 import scu.zpf.seckill.domain.Goods;
+import scu.zpf.seckill.domain.SeckillGoods;
 import scu.zpf.seckill.vo.GoodsVo;
 
 import java.util.List;
@@ -22,4 +23,9 @@ public class GoodsService {
     public GoodsVo getGoodsByGoodsId(long goodsId) {
         return goodsDao.getGoodsByGoodsId(goodsId);
     }
+
+    public void reduceStock(GoodsVo goodsVo) {
+        goodsDao.reduceStock(goodsVo);
+    }
+
 }

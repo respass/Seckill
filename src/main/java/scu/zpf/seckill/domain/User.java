@@ -12,7 +12,6 @@ public class User {
     private String head;
     private Date registerDate;
     private Date lastLoginDate;
-    private Integer loginCount;
 
     public long getId() {
         return id;
@@ -65,12 +64,6 @@ public class User {
     }
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
-    }
-    public Integer getLoginCount() {
-        return loginCount;
-    }
-    public void setLoginCount(Integer loginCount) {
-        this.loginCount = loginCount;
     }
 
 }

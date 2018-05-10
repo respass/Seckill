@@ -35,7 +35,7 @@ public class UserService {
         return userDao.getUserByPhone(phone);
     }
 
-    public boolean login(LoginVo loginVo, HttpServletResponse response) {
+    public String login(LoginVo loginVo, HttpServletResponse response) {
         if (loginVo == null ) {
             throw new GlobalException(CodeMessage.SERVER_ERROR);
         }
@@ -61,7 +61,7 @@ public class UserService {
         String token = UUIDUtil.uuid();
         addCookie(response, token, user);
 
-        return true;
+        return token;
     }
 
 

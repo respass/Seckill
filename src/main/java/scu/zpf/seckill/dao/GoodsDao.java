@@ -4,6 +4,8 @@ package scu.zpf.seckill.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import scu.zpf.seckill.domain.SeckillGoods;
 import scu.zpf.seckill.vo.GoodsVo;
 
 import java.util.List;
@@ -18,4 +20,7 @@ public interface GoodsDao {
             "where g.id = #{goodsId}")
     GoodsVo getGoodsByGoodsId(@Param("goodsId") long goodsId);
 
+
+    @Update("update seckillGoods set stock = stock -1 where goods_id = #{id}")
+    public int reduceStock(GoodsVo goods);
 }
