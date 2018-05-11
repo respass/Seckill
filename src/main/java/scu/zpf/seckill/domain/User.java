@@ -9,7 +9,6 @@ public class User {
     private String nickname;
     private String password;
     private String salt;
-    private String head;
     private Date registerDate;
     private Date lastLoginDate;
 
@@ -46,12 +45,6 @@ public class User {
     }
     public void setSalt(String salt) {
         this.salt = salt;
-    }
-    public String getHead() {
-        return head;
-    }
-    public void setHead(String head) {
-        this.head = head;
     }
     public Date getRegisterDate() {
         return registerDate;

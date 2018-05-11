@@ -13,10 +13,16 @@ import scu.zpf.seckill.result.CodeMessage;
 import scu.zpf.seckill.service.GoodsService;
 import scu.zpf.seckill.service.OrderService;
 import scu.zpf.seckill.service.SeckillService;
+import scu.zpf.seckill.service.UserService;
 import scu.zpf.seckill.vo.GoodsVo;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class SeckillController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     GoodsService goodsService;
@@ -28,7 +34,11 @@ public class SeckillController {
     SeckillService seckillService;
 
     @PostMapping("/goods/seckill")
-    public String seckill(User user, @RequestParam("goodsId") long goodsId, Model model) {
+    public String seckill(HttpServletRequest request, @RequestParam("goodsId") long goodsId, Model model) {
+
+
+        User user = userService.getByToken(request);
+
         if (user == null) {
             return "login";
         }
@@ -44,12 +54,14 @@ public class SeckillController {
         }
 
 
+
         //是否已经秒杀到了
         SeckillOrder seckillOrder = orderService.getSeckillOrderByUserIdGoodsId(user.getId(), goodsId);
         if (seckillOrder != null) {
             model.addAttribute("error_msg", CodeMessage.Seckill_Repeat);
             return "fail";
         }
+
 
         //减库存, 下订单, 写入SeckillOrder
         Order order = seckillService.seckill(user, goodsVo);
@@ -59,5 +71,10 @@ public class SeckillController {
 
         return "orderDetail";
     }
+
+
+
+
+
 
 }

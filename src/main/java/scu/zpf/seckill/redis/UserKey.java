@@ -13,5 +13,7 @@ public class UserKey extends BasePrefix {
 
     public static UserKey token = new UserKey(TOKEN_EXPIRE, "tk-" );
 
+    //对象缓存,0为永久有效
+    public static UserKey getByPhone = new UserKey(0, "phone-");
 
 }

@@ -10,11 +10,13 @@ import scu.zpf.seckill.exception.GlobalException;
 import scu.zpf.seckill.redis.RedisService;
 import scu.zpf.seckill.redis.UserKey;
 import scu.zpf.seckill.result.CodeMessage;
+import scu.zpf.seckill.util.CookieUtil;
 import scu.zpf.seckill.util.Md5Util;
 import scu.zpf.seckill.util.UUIDUtil;
 import scu.zpf.seckill.vo.LoginVo;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -32,7 +34,21 @@ public class UserService {
 
 
     public User getByPhone(String phone) {
-        return userDao.getUserByPhone(phone);
+
+        //1.从缓存中取
+        User user = redisService.get(UserKey.getByPhone, phone, User.class );
+        if (user != null){
+            return user;
+        }
+
+        //2.从数据库中取
+        user = userDao.getUserByPhone(phone);
+
+        //3.写入缓存
+        if (user != null){
+            redisService.set(UserKey.getByPhone, phone, user);
+        }
+        return user;
     }
 
     public String login(LoginVo loginVo, HttpServletResponse response) {
@@ -57,6 +73,7 @@ public class UserService {
             throw new GlobalException(CodeMessage.PASSWORD_ERROR);
         }
 
+
         //生成token
         String token = UUIDUtil.uuid();
         addCookie(response, token, user);
@@ -64,6 +81,18 @@ public class UserService {
         return token;
     }
 
+
+    public User getByToken(HttpServletRequest request) {
+
+        String paramToken = request.getParameter(UserService.COOKIE_NAME_TOKEN);
+        String cookieToken = CookieUtil.getCookieValue(request, UserService.COOKIE_NAME_TOKEN);
+        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
+            return null;
+        }
+        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+        User user = redisService.get(UserKey.token, token, User.class);
+        return user;
+    }
 
     public User getByToken(HttpServletResponse response, String token) {
         if (StringUtils.isEmpty(token)) {

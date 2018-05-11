@@ -30,22 +30,22 @@ public class UserUtil {
 		}
 		System.out.println("create user");
 		//插入数据库
-//		Connection conn = DBUtil.getConn();
-//		String sql = "insert into user( nickname, register_date, salt, password, phone)values(?,?,?,?,?)";
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
-//		for(int i=0;i<users.size();i++) {
-//			User user = users.get(i);
-//			pstmt.setString(1, user.getNickname());
-//			pstmt.setTimestamp(2, new Timestamp(user.getRegisterDate().getTime()));
-//			pstmt.setString(3, user.getSalt());
-//			pstmt.setString(4, user.getPassword());
-//			pstmt.setString(5, user.getPhone());
-//			pstmt.addBatch();
-//		}
-//		pstmt.executeBatch();
-//		pstmt.close();
-//		conn.close();
-//		System.out.println("insert to db");
+		Connection conn = DBUtil.getConn();
+		String sql = "insert into user( nickname, register_date, salt, password, phone)values(?,?,?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		for(int i=0;i<users.size();i++) {
+			User user = users.get(i);
+			pstmt.setString(1, user.getNickname());
+			pstmt.setTimestamp(2, new Timestamp(user.getRegisterDate().getTime()));
+			pstmt.setString(3, user.getSalt());
+			pstmt.setString(4, user.getPassword());
+			pstmt.setString(5, user.getPhone());
+			pstmt.addBatch();
+		}
+		pstmt.executeBatch();
+		pstmt.close();
+		conn.close();
+		System.out.println("insert to db");
 
 		//登录，生成token
 		String urlString = "http://localhost:8080/do_login";

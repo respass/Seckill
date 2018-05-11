@@ -21,6 +21,7 @@ public class RedisService {
             if (val2Str == null || val2Str.length() <= 0) {
                 return false;
             }
+
             //给key添加前缀
             String realKey = prefix.getPrefix() + key;
 
