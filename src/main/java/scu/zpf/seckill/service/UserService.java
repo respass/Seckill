@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scu.zpf.seckill.dao.UserDao;
+import scu.zpf.seckill.domain.SeckillOrder;
 import scu.zpf.seckill.domain.User;
 import scu.zpf.seckill.exception.GlobalException;
 import scu.zpf.seckill.redis.RedisService;
@@ -113,6 +114,8 @@ public class UserService {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
+
+
 
 
 

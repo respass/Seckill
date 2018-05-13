@@ -4,7 +4,6 @@ package scu.zpf.seckill.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scu.zpf.seckill.dao.GoodsDao;
-import scu.zpf.seckill.domain.Goods;
 import scu.zpf.seckill.domain.SeckillGoods;
 import scu.zpf.seckill.vo.GoodsVo;
 
@@ -24,8 +23,11 @@ public class GoodsService {
         return goodsDao.getGoodsByGoodsId(goodsId);
     }
 
-    public void reduceStock(GoodsVo goodsVo) {
-        goodsDao.reduceStock(goodsVo);
+    public boolean reduceStock(GoodsVo goods) {
+        SeckillGoods seckillGoods = new SeckillGoods();
+        seckillGoods.setGoodsId(goods.getId());
+        int ret = goodsDao.reduceStock(goods);
+        return ret > 0;
     }
 
 }

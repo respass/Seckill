@@ -18,6 +18,9 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
+    public Order getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
+    }
 
     public SeckillOrder getSeckillOrderByUserIdGoodsId(long userId, long goodsId){
         SeckillOrder seckillOrder = orderDao.getSeckillOrderByUserIdGoodsId(userId, goodsId);
@@ -42,11 +45,11 @@ public class OrderService {
         order.setGoodsPrice(goodsVo.getSeckillPrice());
         order.setStatus(0);
         order.setUserId(user.getId());
-        long orderId = insertOrder(order);
+        insertOrder(order);
 
         SeckillOrder seckillOrder = new SeckillOrder();
         seckillOrder.setGoodsId(goodsVo.getId());
-        seckillOrder.setOrderId(orderId);
+        seckillOrder.setOrderId(order.getId());
         seckillOrder.setUserId(user.getId());
         insertSeckillOrder(seckillOrder);
 

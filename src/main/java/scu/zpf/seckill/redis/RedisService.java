@@ -55,9 +55,39 @@ public class RedisService {
         }
     }
 
+    /**
+     * 判断key是否存在
+     * */
+    public <T> boolean exists(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis =  jedisPool.getResource();
+            //生成真正的key
+            String realKey  = prefix.getPrefix() + key;
+            return  jedis.exists(realKey);
+        }finally {
+            returnToPool(jedis);
+        }
+    }
 
 
-    private <T> String beanToString(T value) {
+    /**
+     * key-1
+     * */
+    public <T> Long decr(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis =  jedisPool.getResource();
+            //生成真正的key
+            String realKey  = prefix.getPrefix() + key;
+            return  jedis.decr(realKey);
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+
+    public static <T> String beanToString(T value) {
         if(value == null) {
             return null;
         }
@@ -74,7 +104,7 @@ public class RedisService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T stringToBean(String str, Class<T> clazz) {
+    public static <T> T stringToBean(String str, Class<T> clazz) {
         if(str == null || str.length() <= 0 || clazz == null) {
             return null;
         }

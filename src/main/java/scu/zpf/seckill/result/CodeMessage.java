@@ -17,11 +17,15 @@ public class CodeMessage {
     public static CodeMessage PHONE_EMPTY = new CodeMessage(989, "手机号不能为空");
     public static CodeMessage PASSWORD_EMPTY = new CodeMessage(990, "密码不能为空");
     public static CodeMessage PASSWORD_ERROR = new CodeMessage(991, "密码错误");
+    public static CodeMessage SESSION_ERROR = new CodeMessage(992, "Session不存在或者已经失效");
 
 
     //seckill
     public static CodeMessage Seckill_END = new CodeMessage(788, "秒杀已经结束");
     public static CodeMessage Seckill_Repeat = new CodeMessage(789, "不能重复秒杀");
+
+    //order
+    public static CodeMessage ORDER_NOT_EXIST = new CodeMessage(688, "订单不存在");
 
     private CodeMessage(int code, String message) {
         this.code = code;

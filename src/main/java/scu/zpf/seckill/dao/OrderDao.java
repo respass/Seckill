@@ -21,6 +21,9 @@ public interface OrderDao {
     @Insert("insert into seckill.seckillOrder(user_id, order_id, goods_id) values(#{userId}, #{orderId}, #{goodsId})")
     void insertSeckillOrder(SeckillOrder seckillOrder);
 
+    @Select("select * from seckill.order where id = #{orderId}")
+    Order getOrderById(@Param("orderId") long orderId);
+
 
 
 }
